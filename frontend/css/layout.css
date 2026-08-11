@@ -1,0 +1,202 @@
+/*
+  Structural layout: header, footer, containers, and the two grid patterns
+  every page reuses — the horizontal "rail" (Netflix-style browsing lanes)
+  and the responsive grid (browse/library pages). Kept separate from
+  components.css so "how things are arranged" and "what things look like"
+  can be reasoned about independently.
+*/
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 var(--space-sm);
+  }
+}
+
+/* --- Site header --- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-lg);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(248, 250, 252, 0.06);
+}
+
+.site-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-family-display);
+  font-weight: 800;
+  font-size: var(--font-size-lg);
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+.site-header__brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: conic-gradient(
+    from 180deg,
+    var(--color-accent-primary),
+    var(--color-accent-secondary),
+    var(--color-highlight),
+    var(--color-accent-cool),
+    var(--color-accent-primary)
+  );
+  flex-shrink: 0;
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-header__nav a {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.site-header__nav a:hover,
+.site-header__nav a[aria-current="page"] {
+  color: var(--color-text-primary);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.site-header__menu-toggle {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .site-header__nav {
+    display: none;
+  }
+  .site-header__menu-toggle {
+    display: inline-flex;
+  }
+}
+
+/* --- Footer --- */
+
+.site-footer {
+  border-top: 1px solid rgba(248, 250, 252, 0.06);
+  padding: var(--space-lg) 0;
+  margin-top: var(--space-xl);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.site-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* --- Rails: horizontal-scroll browsing lanes on the homepage --- */
+
+.rail {
+  margin: var(--space-lg) 0;
+}
+
+.rail__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.rail__title {
+  font-size: var(--font-size-xl);
+  margin: 0;
+}
+
+.rail__track {
+  display: flex;
+  gap: var(--space-sm);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: var(--space-xs);
+  scrollbar-width: thin;
+  /* Reserves the height a row of cards will occupy before JS has populated
+     it (skeleton or real data) — without this, the container is 0px tall
+     at first paint and then jumps to full height once content loads,
+     which is exactly the kind of large, avoidable layout shift that tanks
+     CLS (Cumulative Layout Shift) and was measured at 0.756 via Lighthouse
+     before this fix — see docs/DEVOPS.md's performance section. 390px =
+     a 200px-wide card's 2:3 poster (300px) + title/year text + padding. */
+  min-height: 390px;
+}
+
+.rail__track > * {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  width: 200px;
+}
+
+@media (max-width: 640px) {
+  .rail__track {
+    min-height: 305px; /* same reasoning, at the 150px mobile card width */
+  }
+  .rail__track > * {
+    width: 150px;
+  }
+}
+
+/* --- Responsive grid: browse/library pages --- */
+
+.title-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-sm) var(--space-sm);
+  /* Same CLS-prevention reasoning as .rail__track above — this container
+     is empty until a fetch resolves, so it needs reserved height too. A
+     single card row's worth is enough: it prevents the largest jump (empty
+     -> first row) without over-reserving space below the fold for grids
+     that end up shorter than a full page. */
+  min-height: 300px;
+}
+
+@media (max-width: 480px) {
+  .title-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-xs);
+    min-height: 230px;
+  }
+}
+
+/* --- Page section spacing --- */
+
+.page-section {
+  padding: var(--space-xl) 0;
+}
+
+.page-section--tight {
+  padding: var(--space-lg) 0;
+}

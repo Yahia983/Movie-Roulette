@@ -1,0 +1,75 @@
+/*
+  Design tokens for MovieRoulette.
+
+  Why CSS custom properties instead of hard-coded hex values scattered across
+  stylesheets: the design spec calls for a very specific, deliberate palette
+  and typography system. Centralizing it here means every future component
+  (cards, buttons, the roulette wheel) pulls from the same source of truth,
+  and a future rebrand or dark/light theme toggle is a token change, not a
+  find-and-replace across hundreds of rules.
+*/
+
+:root {
+  /* --- Color palette --- */
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-card: #263547;
+
+  --color-accent-primary: #ff6b6b;
+  --color-accent-secondary: #f4b942;
+  --color-accent-cool: #4ea8de;
+  --color-highlight: #4ade80;
+
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+
+  /* --- Typography ---
+     Inter carries UI and body text — it's built for screens at small sizes
+     and disappears into the content, which is what long lists of titles and
+     metadata need. Manrope is reserved for display headlines only (hero
+     text, section titles) — its geometric, slightly wider letterforms give
+     the "premium/cinematic" moments in the spec a distinct voice instead of
+     Inter doing double duty everywhere, which is what reads as templated. */
+  --font-family-base: "Inter", system-ui, -apple-system, sans-serif;
+  --font-family-display: "Manrope", "Inter", system-ui, sans-serif;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.75rem;
+  --font-size-2xl: 2.5rem;
+  --font-size-3xl: 3.5rem;
+
+  --line-height-tight: 1.2;
+  --line-height-base: 1.6;
+
+  /* --- Spacing scale --- */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+
+  /* --- Shape & elevation --- */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-elevated: 0 16px 48px rgba(0, 0, 0, 0.45);
+
+  /* --- Motion --- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+}
+
+/* Respect user motion preferences globally — required for WCAG 2.2 AA and
+   for anyone prone to motion sensitivity from the roulette animations. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+  }
+}

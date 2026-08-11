@@ -1,0 +1,534 @@
+/*
+  Reusable UI components: buttons, form controls, the title card, badges,
+  toasts, and skeleton loaders. Every page composes pages out of these
+  rather than writing one-off styles, which is what keeps "every page
+  should feel polished" (per the brief) achievable without hand-tuning each
+  page separately.
+*/
+
+/* --- Buttons --- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--color-accent-primary), #ff8787);
+  color: #1a0f0f;
+  box-shadow: 0 4px 16px rgba(255, 107, 107, 0.25);
+}
+
+.btn--primary:hover:not(:disabled) {
+  box-shadow: 0 6px 24px rgba(255, 107, 107, 0.4);
+}
+
+.btn--secondary {
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  border: 1px solid rgba(248, 250, 252, 0.1);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: #2f4157;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+  padding: 0.5rem 0.75rem;
+}
+
+.btn--ghost:hover:not(:disabled) {
+  color: var(--color-text-primary);
+  background: rgba(248, 250, 252, 0.06);
+}
+
+.btn--icon {
+  padding: 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.btn--full {
+  width: 100%;
+}
+
+.btn--sm {
+  padding: 0.5rem 1rem;
+  font-size: var(--font-size-xs);
+}
+
+/* --- Icon toggle buttons (favorite / watch-later) --- */
+
+.icon-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(248, 250, 252, 0.15);
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.icon-toggle svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.icon-toggle[aria-pressed="true"] {
+  background: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
+  color: #1a0f0f;
+}
+
+.icon-toggle[aria-pressed="true"] svg {
+  fill: currentColor;
+}
+
+.icon-toggle:hover {
+  transform: translateY(-2px);
+}
+
+/* --- Form controls --- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: var(--space-sm);
+}
+
+.field label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.field__hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.field__error {
+  font-size: var(--font-size-xs);
+  color: var(--color-accent-primary);
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background: var(--color-bg-secondary);
+  border: 1px solid rgba(248, 250, 252, 0.12);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+.input:focus,
+.select:focus {
+  border-color: var(--color-accent-cool);
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23CBD5E1' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.2rem;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 250, 252, 0.15);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  user-select: none;
+}
+
+.chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chip:has(input:checked) {
+  background: var(--color-accent-cool);
+  border-color: var(--color-accent-cool);
+  color: #071018;
+}
+
+.range-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.range-field input[type="range"] {
+  flex: 1;
+  accent-color: var(--color-accent-cool);
+}
+
+.range-field__value {
+  min-width: 2.5em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* --- Badges / genre pills (read-only, used on cards & detail pages) --- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  background: rgba(248, 250, 252, 0.08);
+  color: var(--color-text-secondary);
+}
+
+.badge--rating {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--color-highlight);
+}
+
+.badge--rating.badge--low {
+  background: rgba(255, 107, 107, 0.15);
+  color: var(--color-accent-primary);
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* --- Title card --- */
+
+.title-card {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-card);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--duration-base) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard);
+}
+
+.title-card:hover,
+.title-card:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.title-card__poster-wrap {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  background: var(--color-bg-secondary);
+}
+
+.title-card__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.title-card__poster-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  padding: var(--space-sm);
+}
+
+.title-card__rating {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+}
+
+.title-card__body {
+  padding: var(--space-xs) var(--space-sm) var(--space-sm);
+}
+
+.title-card__title {
+  font-family: var(--font-family-base);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  margin: 0 0 0.2rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.title-card__meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* --- Skeleton loading states --- */
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.skeleton {
+  background: var(--color-card);
+  border-radius: var(--radius-md);
+  animation: skeleton-pulse 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}
+
+.skeleton-card {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.skeleton-card__poster {
+  aspect-ratio: 2 / 3;
+}
+
+.skeleton-card__line {
+  height: 0.8em;
+  margin-top: 0.5em;
+  border-radius: 4px;
+}
+
+/* --- Empty states --- */
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg);
+  color: var(--color-text-secondary);
+}
+
+.empty-state__icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+.empty-state h3 {
+  color: var(--color-text-primary);
+}
+
+.empty-state p {
+  /* The global `p { max-width: 70ch }` rule (base.css) caps paragraph width
+     without centering the box itself — text-align:center only centers text
+     *within* a box, not the box within its parent. Centering the margins
+     here is what actually centers it under the icon/heading above. */
+  max-width: 40ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Toasts --- */
+
+.toast-region {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  max-width: 320px;
+}
+
+@media (max-width: 480px) {
+  .toast-region {
+    left: var(--space-sm);
+    right: var(--space-sm);
+    bottom: var(--space-sm);
+    max-width: none;
+  }
+}
+
+.toast {
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-elevated);
+  font-size: var(--font-size-sm);
+  border-left: 3px solid var(--color-accent-cool);
+  animation: toast-in var(--duration-base) var(--ease-standard);
+}
+
+.toast--error {
+  border-left-color: var(--color-accent-primary);
+}
+
+.toast--success {
+  border-left-color: var(--color-highlight);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Tab strip (used for Movies/TV toggle on browse, and section tabs on
+   the library page) --- */
+
+.browse-tabs {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+}
+
+.browse-tab {
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-base);
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.browse-tab[aria-selected="true"] {
+  background: var(--color-accent-primary);
+  color: #1a0f0f;
+}
+
+/* --- Star rating input (used on detail pages) --- */
+
+.star-rating {
+  display: inline-flex;
+  gap: 0.15rem;
+}
+
+.star-rating button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.15rem;
+  color: rgba(248, 250, 252, 0.25);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.star-rating button svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.star-rating button.is-filled,
+.star-rating button:hover,
+.star-rating button:hover ~ button {
+  color: var(--color-accent-secondary);
+}
+
+/* --- Loading spinner (inline, e.g. "load more") --- */
+
+.spinner {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  border: 2px solid rgba(248, 250, 252, 0.2);
+  border-top-color: var(--color-text-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 1.4s;
+  }
+}

@@ -1,0 +1,117 @@
+/*
+  Global reset and base typography.
+
+  A deliberately minimal reset (not a full Normalize/Reset library) — just
+  enough to remove browser inconsistencies without fighting semantic HTML
+  defaults we actually want to keep (e.g. list markers, focus rings).
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-family-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: var(--line-height-tight);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+h1 {
+  font-size: var(--font-size-3xl);
+}
+h2 {
+  font-size: var(--font-size-2xl);
+}
+h3 {
+  font-size: var(--font-size-xl);
+}
+
+p {
+  margin: 0 0 var(--space-sm) 0;
+  color: var(--color-text-secondary);
+  max-width: 70ch; /* readable paragraph width, per design spec */
+}
+
+a {
+  color: var(--color-accent-cool);
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* The `hidden` attribute is a UA-stylesheet rule (`[hidden]{display:none}`),
+   and per the CSS cascade, ANY author-origin display rule overrides it
+   regardless of specificity — so `img, svg { display: block }` above would
+   silently defeat `hidden` on every image/SVG in the app otherwise. This is
+   the standard defensive fix, so JS toggling `.hidden = true` always works
+   no matter what other display rules exist for that element. */
+[hidden] {
+  display: none !important;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Visible focus states everywhere — required for keyboard navigation and
+   WCAG 2.2 AA; never suppress this with outline: none without a replacement. */
+:focus-visible {
+  outline: 3px solid var(--color-accent-cool);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-sm);
+  top: -60px;
+  z-index: 100;
+  background: var(--color-accent-cool);
+  color: var(--color-bg-primary);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transition: top var(--duration-fast) var(--ease-standard);
+}
+
+.skip-link:focus {
+  top: var(--space-sm);
+}
