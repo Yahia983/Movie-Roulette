@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Library — MovieRoulette</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content">
+      <div class="container page-section--tight">
+        <h1>My Library</h1>
+
+        <div class="browse-tabs" role="tablist" aria-label="Library section">
+          <button type="button" class="browse-tab" id="tab-favorites" role="tab">Favorites</button>
+          <button type="button" class="browse-tab" id="tab-watchlater" role="tab">Watch Later</button>
+          <button type="button" class="browse-tab" id="tab-collections" role="tab">Collections</button>
+        </div>
+
+        <section id="panel-favorites" hidden>
+          <div class="title-grid" id="favorites-grid"></div>
+        </section>
+
+        <section id="panel-watchlater" hidden>
+          <div class="title-grid" id="watchlater-grid"></div>
+        </section>
+
+        <section id="panel-collections" hidden>
+          <div class="collections-header">
+            <button type="button" class="btn btn--primary btn--sm" id="new-collection-btn">+ New collection</button>
+          </div>
+
+          <div id="collections-list-view">
+            <div class="collections-grid" id="collections-grid"></div>
+          </div>
+
+          <div id="collection-detail-view" hidden>
+            <button type="button" class="btn btn--ghost btn--sm" id="back-to-collections-btn">← All collections</button>
+            <div class="collection-detail-header">
+              <h2 id="collection-detail-name"></h2>
+              <button type="button" class="btn btn--secondary btn--sm" id="delete-collection-btn">Delete collection</button>
+            </div>
+            <p id="collection-detail-description" class="field__hint"></p>
+            <div class="title-grid" id="collection-items-grid"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <dialog id="new-collection-dialog" class="dialog">
+      <form id="new-collection-form">
+        <h2>New collection</h2>
+        <div class="field">
+          <label for="collection-name-input">Name</label>
+          <input type="text" id="collection-name-input" class="input" required maxlength="150" />
+        </div>
+        <div class="field">
+          <label for="collection-description-input">Description (optional)</label>
+          <input type="text" id="collection-description-input" class="input" maxlength="1000" />
+        </div>
+        <div class="dialog__actions">
+          <button type="button" class="btn btn--ghost" id="cancel-new-collection-btn">Cancel</button>
+          <button type="submit" class="btn btn--primary">Create</button>
+        </div>
+      </form>
+    </dialog>
+
+    <style>
+      .collections-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: var(--space-sm);
+      }
+      .collection-card {
+        display: block;
+        text-align: left;
+        background: var(--color-card);
+        border: none;
+        border-radius: var(--radius-md);
+        padding: var(--space-md);
+        cursor: pointer;
+        color: var(--color-text-primary);
+        box-shadow: var(--shadow-card);
+        transition: transform var(--duration-fast) var(--ease-standard);
+      }
+      .collection-card:hover {
+        transform: translateY(-4px);
+      }
+      .collection-card h3 {
+        font-size: var(--font-size-base);
+        margin-bottom: 0.2rem;
+      }
+      .collection-card p {
+        font-size: var(--font-size-xs);
+      }
+      .collections-header {
+        margin-bottom: var(--space-md);
+      }
+      .collection-detail-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: var(--space-sm);
+      }
+      .dialog {
+        border: none;
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+        background: var(--color-bg-secondary);
+        color: var(--color-text-primary);
+        max-width: 420px;
+        width: 90%;
+      }
+      .dialog::backdrop {
+        background: rgba(0, 0, 0, 0.6);
+      }
+      .dialog__actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--space-xs);
+        margin-top: var(--space-md);
+      }
+    </style>
+
+    <script type="module" src="/js/pages/library.js"></script>
+  </body>
+</html>

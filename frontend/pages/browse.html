@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browse — MovieRoulette</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content">
+      <div class="container page-section--tight">
+        <div class="browse-tabs" role="tablist" aria-label="Media type">
+          <button type="button" class="browse-tab" id="tab-movie" role="tab">Movies</button>
+          <button type="button" class="browse-tab" id="tab-tv" role="tab">TV Shows</button>
+        </div>
+
+        <div class="browse-layout">
+          <aside class="browse-filters" aria-label="Filters">
+            <div class="field">
+              <label for="search-input">Search</label>
+              <input
+                type="search"
+                id="search-input"
+                class="input"
+                placeholder="Search by title…"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="field">
+              <label for="sort-select">Sort by</label>
+              <select id="sort-select" class="select">
+                <option value="popularity">Most popular</option>
+                <option value="rating">Highest rated</option>
+                <option value="release_date">Newest</option>
+                <option value="title">Title (A–Z)</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label id="min-rating-label" for="min-rating-input">Minimum rating</label>
+              <div class="range-field">
+                <input
+                  type="range"
+                  id="min-rating-input"
+                  min="0"
+                  max="9"
+                  step="1"
+                  value="0"
+                  aria-labelledby="min-rating-label"
+                />
+                <span class="range-field__value" id="min-rating-value">Any</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <span id="genre-filter-label">Genres</span>
+              <div class="checkbox-group" id="genre-filter-group" aria-labelledby="genre-filter-label"></div>
+            </div>
+
+            <button type="button" class="btn btn--ghost btn--sm" id="clear-filters-btn">
+              Clear filters
+            </button>
+          </aside>
+
+          <section aria-label="Results">
+            <p id="results-count" class="browse-results-count" role="status"></p>
+            <div class="title-grid" id="results-grid"></div>
+            <div id="load-more-sentinel" class="browse-sentinel"></div>
+            <div id="load-more-spinner" class="browse-spinner" hidden>
+              <span class="spinner" aria-hidden="true"></span> Loading more…
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <style>
+      .browse-layout {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: var(--space-lg);
+        align-items: start;
+      }
+      .browse-filters {
+        position: sticky;
+        top: calc(64px + var(--space-md));
+        background: var(--color-bg-secondary);
+        border-radius: var(--radius-lg);
+        padding: var(--space-md);
+      }
+      .browse-results-count {
+        color: var(--color-text-secondary);
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--space-sm);
+      }
+      .browse-sentinel {
+        height: 1px;
+      }
+      .browse-spinner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-xs);
+        padding: var(--space-lg) 0;
+        color: var(--color-text-secondary);
+      }
+      @media (max-width: 860px) {
+        .browse-layout {
+          grid-template-columns: 1fr;
+        }
+        .browse-filters {
+          position: static;
+        }
+      }
+    </style>
+
+    <script type="module" src="/js/pages/browse.js"></script>
+  </body>
+</html>

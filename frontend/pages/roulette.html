@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roulette — MovieRoulette</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/roulette.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content">
+      <div class="container page-section--tight">
+        <header style="text-align: center; margin-bottom: var(--space-lg);">
+          <h1>Can't decide? Spin.</h1>
+          <p style="color: var(--color-text-secondary); max-width: 60ch; margin: 0 auto;">
+            Set your mood, or don't — then let the roulette pick something for you.
+          </p>
+        </header>
+
+        <div class="roulette-preset-row" id="preset-row" role="group" aria-label="Quick presets"></div>
+
+        <div class="roulette-filters">
+          <div class="field">
+            <label id="media-type-label">Looking for</label>
+            <div class="checkbox-group" role="radiogroup" aria-labelledby="media-type-label" id="media-type-group">
+              <label class="chip"><input type="radio" name="media-type" value="" checked /> Everything</label>
+              <label class="chip"><input type="radio" name="media-type" value="movie" /> Movies</label>
+              <label class="chip"><input type="radio" name="media-type" value="tv_show" /> TV Shows</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <span id="roulette-genre-label">Genres</span>
+            <div class="checkbox-group" id="roulette-genre-group" aria-labelledby="roulette-genre-label"></div>
+          </div>
+
+          <div class="field">
+            <label id="roulette-rating-label" for="roulette-min-rating">Minimum rating</label>
+            <div class="range-field">
+              <input type="range" id="roulette-min-rating" min="0" max="9" step="1" value="0" aria-labelledby="roulette-rating-label" />
+              <span class="range-field__value" id="roulette-rating-value">Any</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label id="roulette-runtime-label" for="roulette-max-runtime">Max runtime</label>
+            <div class="range-field">
+              <input type="range" id="roulette-max-runtime" min="30" max="240" step="15" value="240" aria-labelledby="roulette-runtime-label" />
+              <span class="range-field__value" id="roulette-runtime-value">Any</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="roulette-decade">Decade</label>
+            <select id="roulette-decade" class="select">
+              <option value="">Any decade</option>
+              <option value="2020">2020s</option>
+              <option value="2010">2010s</option>
+              <option value="2000">2000s</option>
+              <option value="1990">1990s</option>
+              <option value="1980">1980s</option>
+              <option value="1970">1970s</option>
+            </select>
+          </div>
+        </div>
+
+        <section class="roulette-stage" aria-label="Roulette wheel">
+          <div class="roulette-reel-viewport" id="reel-viewport">
+            <div class="roulette-marker" aria-hidden="true"></div>
+            <div class="roulette-reel" id="reel"></div>
+          </div>
+
+          <div class="roulette-controls">
+            <button type="button" class="spin-button" id="spin-button">🎲 Spin</button>
+            <p class="roulette-candidate-count" id="candidate-count" role="status"></p>
+          </div>
+        </section>
+
+        <div class="roulette-result" id="roulette-result">
+          <img class="roulette-result__poster" id="result-poster" alt="" />
+          <div>
+            <p class="detail-hero__meta" id="result-meta"></p>
+            <h2 id="result-title"></h2>
+            <p id="result-overview"></p>
+            <div class="badge-row" id="result-genres"></div>
+            <div class="roulette-result__actions">
+              <a class="btn btn--primary" id="result-view-btn" href="#">View details</a>
+              <button type="button" class="btn btn--secondary" id="result-watchlater-btn">+ Watch later</button>
+              <button type="button" class="btn btn--ghost" id="spin-again-btn">Spin again</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script type="module" src="/js/pages/roulette.js"></script>
+  </body>
+</html>

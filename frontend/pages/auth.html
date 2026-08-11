@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log in — MovieRoulette</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content">
+      <div class="container auth-wrap">
+        <div class="auth-card">
+          <h1 id="auth-heading">Log in</h1>
+          <p class="field__hint" id="auth-subhead">Welcome back — pick up right where you left off.</p>
+
+          <form id="auth-form" novalidate>
+            <div class="field" id="username-field" hidden>
+              <label for="username-input">Username</label>
+              <input type="text" id="username-input" class="input" autocomplete="username" minlength="3" />
+              <p class="field__error" id="username-error" hidden></p>
+            </div>
+
+            <div class="field" id="email-field" hidden>
+              <label for="email-input">Email</label>
+              <input type="email" id="email-input" class="input" autocomplete="email" />
+              <p class="field__error" id="email-error" hidden></p>
+            </div>
+
+            <div class="field" id="identifier-field">
+              <label for="identifier-input">Email or username</label>
+              <input type="text" id="identifier-input" class="input" autocomplete="username" />
+            </div>
+
+            <div class="field">
+              <label for="password-input">Password</label>
+              <input type="password" id="password-input" class="input" autocomplete="current-password" minlength="8" />
+              <p class="field__error" id="password-error" hidden></p>
+            </div>
+
+            <p class="field__error" id="form-error" role="alert" hidden></p>
+
+            <button type="submit" class="btn btn--primary btn--full" id="submit-btn">Log in</button>
+          </form>
+
+          <p class="auth-toggle">
+            <span id="toggle-prompt">Don't have an account?</span>
+            <button type="button" class="btn btn--ghost btn--sm" id="toggle-mode-btn">Sign up</button>
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <style>
+      .auth-wrap {
+        display: flex;
+        justify-content: center;
+        padding: var(--space-xl) var(--space-sm);
+      }
+      .auth-card {
+        width: 100%;
+        max-width: 420px;
+        background: var(--color-bg-secondary);
+        border-radius: var(--radius-lg);
+        padding: var(--space-lg);
+      }
+      .auth-toggle {
+        text-align: center;
+        margin-top: var(--space-md);
+        color: var(--color-text-secondary);
+        font-size: var(--font-size-sm);
+      }
+    </style>
+
+    <script type="module" src="/js/pages/auth.js"></script>
+  </body>
+</html>

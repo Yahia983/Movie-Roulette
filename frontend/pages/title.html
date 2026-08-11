@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">MovieRoulette</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content">
+      <div id="detail-skeleton" class="container page-section--tight">
+        <div class="skeleton" style="height: 340px; border-radius: var(--radius-lg);"></div>
+      </div>
+
+      <div id="detail-content" hidden>
+        <section class="detail-hero">
+          <div class="detail-hero__backdrop" id="detail-backdrop" aria-hidden="true"></div>
+          <div class="container detail-hero__inner">
+            <div class="detail-hero__poster-slot">
+              <img id="detail-poster" class="detail-hero__poster" alt="" />
+              <div class="detail-hero__poster-fallback" id="detail-poster-fallback" hidden></div>
+            </div>
+
+            <div class="detail-hero__info">
+              <p class="detail-hero__meta" id="detail-meta"></p>
+              <h1 id="detail-title"></h1>
+              <p class="detail-hero__tagline" id="detail-tagline"></p>
+              <div class="badge-row" id="detail-genres"></div>
+
+              <div class="detail-hero__actions">
+                <button
+                  type="button"
+                  class="icon-toggle"
+                  id="favorite-toggle"
+                  aria-pressed="false"
+                  aria-label="Add to favorites"
+                  title="Favorite"
+                >
+                  <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-10-9.3C.4 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.6 8.4 22 11.7 19.5 16.1 12 21 12 21z"/></svg>
+                </button>
+                <button
+                  type="button"
+                  class="icon-toggle"
+                  id="watchlater-toggle"
+                  aria-pressed="false"
+                  aria-label="Add to watch later"
+                  title="Watch later"
+                >
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                </button>
+              </div>
+
+              <div class="detail-hero__rating" id="rating-widget-wrap" hidden>
+                <p class="field__hint">Your rating</p>
+                <div class="star-rating" id="star-rating" role="radiogroup" aria-label="Your rating"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="container page-section--tight">
+          <section aria-labelledby="overview-heading">
+            <h2 id="overview-heading" class="detail-section-title">Overview</h2>
+            <p id="detail-overview"></p>
+          </section>
+
+          <section aria-labelledby="cast-heading" id="cast-section" hidden>
+            <h2 id="cast-heading" class="detail-section-title">Cast &amp; Crew</h2>
+            <div class="rail__track" id="cast-rail"></div>
+          </section>
+
+          <section aria-labelledby="availability-heading" id="availability-section" hidden>
+            <h2 id="availability-heading" class="detail-section-title">Where to watch</h2>
+            <div class="badge-row" id="availability-list"></div>
+          </section>
+
+          <section aria-labelledby="similar-heading" id="similar-section" hidden>
+            <h2 id="similar-heading" class="detail-section-title">More Like This</h2>
+            <div class="rail__track" id="similar-grid"></div>
+          </section>
+        </div>
+      </div>
+
+      <div id="detail-error" class="container empty-state" hidden>
+        <div class="empty-state__icon" aria-hidden="true">🎬</div>
+        <h3>We couldn't find that title</h3>
+        <p>It may have been removed, or the link might be broken.</p>
+        <a class="btn btn--primary" href="/pages/browse.html">Back to browsing</a>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <style>
+      .detail-hero {
+        position: relative;
+        padding-top: var(--space-xl);
+        padding-bottom: var(--space-lg);
+        overflow: hidden;
+      }
+      .detail-hero__backdrop {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.3), var(--color-bg-primary) 90%),
+          radial-gradient(ellipse 60% 60% at 70% 0%, rgba(78, 168, 222, 0.15), transparent);
+        z-index: -1;
+      }
+      .detail-hero__inner {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        gap: var(--space-lg);
+        align-items: start;
+      }
+      .detail-hero__poster-slot {
+        position: relative;
+      }
+      .detail-hero__poster,
+      .detail-hero__poster-fallback {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-elevated);
+        object-fit: cover;
+        background: var(--color-card);
+      }
+      .detail-hero__poster-fallback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-md);
+        text-align: center;
+        color: var(--color-text-secondary);
+        font-weight: 600;
+      }
+      .detail-hero__meta {
+        color: var(--color-text-secondary);
+        font-size: var(--font-size-sm);
+        margin-bottom: 0.2rem;
+      }
+      .detail-hero__tagline {
+        font-style: italic;
+        color: var(--color-text-secondary);
+      }
+      .detail-hero__actions {
+        display: flex;
+        gap: var(--space-xs);
+        margin: var(--space-md) 0;
+      }
+      .detail-hero__rating {
+        margin-top: var(--space-sm);
+      }
+      .detail-section-title {
+        font-size: var(--font-size-xl);
+        margin-top: var(--space-lg);
+      }
+      #detail-overview {
+        max-width: 75ch;
+        font-size: var(--font-size-base);
+        color: var(--color-text-primary);
+      }
+      .cast-card {
+        width: 120px;
+        text-align: center;
+      }
+      .cast-card__photo,
+      .cast-card__photo-fallback {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        border-radius: var(--radius-sm);
+        background: var(--color-card);
+        object-fit: cover;
+        margin-bottom: 0.4rem;
+      }
+      .cast-card__photo-fallback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--font-size-xs);
+        color: var(--color-text-secondary);
+      }
+      .cast-card__name {
+        font-size: var(--font-size-xs);
+        font-weight: 600;
+        margin: 0;
+      }
+      .cast-card__role {
+        font-size: var(--font-size-xs);
+        color: var(--color-text-secondary);
+        margin: 0;
+      }
+      @media (max-width: 640px) {
+        .detail-hero__inner {
+          grid-template-columns: 140px 1fr;
+        }
+      }
+    </style>
+
+    <script type="module" src="/js/pages/title-detail.js"></script>
+  </body>
+</html>
