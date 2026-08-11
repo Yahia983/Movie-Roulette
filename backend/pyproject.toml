@@ -1,0 +1,57 @@
+[project]
+name = "movieroulette-backend"
+version = "0.1.0"
+description = "MovieRoulette API — never wonder what to watch again."
+requires-python = ">=3.12"
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["app", "tests"]
+# Alembic auto-generates revision files from a fixed template — they don't
+# need to match our style rules, and reformatting them risks diverging from
+# what `alembic revision --autogenerate` produces on the next run.
+extend-exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "ASYNC", # flake8-async — catches blocking calls in async code
+]
+ignore = [
+    "B008", # allow function calls in argument defaults (needed for FastAPI's Depends())
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+strict = true
+# Third-party libs without complete type stubs shouldn't fail the whole build.
+ignore_missing_imports = true
+disallow_untyped_decorators = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+# postgres-marked tests require a real running Postgres instance and are
+# excluded from the default run (see tests/postgres/conftest.py) — run them
+# explicitly with `pytest -m postgres`. The default run also skips them via
+# `-m "not postgres"` so `pytest` alone stays fast and dependency-free.
+addopts = "-v --cov=app --cov-report=term-missing -m \"not postgres\""
+markers = [
+    "postgres: requires a real PostgreSQL database (see tests/postgres/conftest.py)",
+]
