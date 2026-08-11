@@ -1,0 +1,44 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ["--maxkb=1000"]
+      - id: check-merge-conflict
+
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        files: ^(backend|e2e)/
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.4
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+        files: ^(backend|e2e)/
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        files: ^backend/app/
+        additional_dependencies: ["pydantic>=2.10"]
+
+  - repo: local
+    hooks:
+      - id: js-syntax-check
+        name: Check frontend JS syntax
+        # No frontend build step (per the project spec) means no bundler
+        # to catch a syntax error before it ships — `node --check` is a
+        # zero-dependency way to at least catch outright syntax errors
+        # (unclosed brackets, stray tokens) pre-commit, without requiring
+        # an eslint config/toolchain for a project that deliberately has
+        # no other build tooling.
+        entry: bash -c 'for f in "$@"; do node --check "$f" || exit 1; done' --
+        language: system
+        files: ^frontend/js/.*\.js$
