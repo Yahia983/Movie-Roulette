@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieRoulette — Never wonder what to watch again.</title>
+    <meta
+      name="description"
+      content="Browse an enormous movie and TV library, or spin the roulette to instantly find something great to watch."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content">
+      <section class="hero">
+        <div class="container hero__inner">
+          <p class="hero__eyebrow">Decision fatigue, solved</p>
+          <h1 class="hero__headline">
+            Stop scrolling.<br />
+            Start watching.
+          </h1>
+          <p class="hero__subhead">
+            Browse an enormous library of movies and shows, or let the roulette pick
+            something great for you in one spin.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="/pages/roulette.html">🎲 Spin the Roulette</a>
+            <a class="btn btn--secondary" href="/pages/browse.html?type=movie">Browse the Library</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <section class="rail" aria-labelledby="for-you-heading" id="for-you-section" hidden>
+          <div class="rail__header">
+            <h2 class="rail__title" id="for-you-heading">Recommended for You</h2>
+          </div>
+          <div class="rail__track" id="for-you-rail"></div>
+        </section>
+
+        <section class="rail" aria-labelledby="trending-heading">
+          <div class="rail__header">
+            <h2 class="rail__title" id="trending-heading">Trending Movies</h2>
+            <a class="btn btn--ghost btn--sm" href="/pages/browse.html?type=movie&sort_by=popularity">See all</a>
+          </div>
+          <div class="rail__track" id="trending-movies-rail"></div>
+        </section>
+
+        <section class="rail" aria-labelledby="top-rated-heading">
+          <div class="rail__header">
+            <h2 class="rail__title" id="top-rated-heading">Top Rated Movies</h2>
+            <a class="btn btn--ghost btn--sm" href="/pages/browse.html?type=movie&sort_by=rating">See all</a>
+          </div>
+          <div class="rail__track" id="top-rated-movies-rail"></div>
+        </section>
+
+        <section class="rail" aria-labelledby="tv-heading">
+          <div class="rail__header">
+            <h2 class="rail__title" id="tv-heading">Popular TV Shows</h2>
+            <a class="btn btn--ghost btn--sm" href="/pages/browse.html?type=tv">See all</a>
+          </div>
+          <div class="rail__track" id="popular-tv-rail"></div>
+        </section>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <style>
+      .hero {
+        position: relative;
+        padding: var(--space-xl) 0 var(--space-lg);
+        background:
+          radial-gradient(ellipse 60% 50% at 30% 0%, rgba(255, 107, 107, 0.15), transparent),
+          radial-gradient(ellipse 50% 40% at 80% 20%, rgba(78, 168, 222, 0.12), transparent);
+      }
+      .hero__inner {
+        max-width: 720px;
+      }
+      .hero__eyebrow {
+        color: var(--color-accent-secondary);
+        font-weight: 700;
+        font-size: var(--font-size-sm);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: var(--space-xs);
+      }
+      .hero__headline {
+        font-size: var(--font-size-3xl);
+        margin-bottom: var(--space-sm);
+      }
+      .hero__subhead {
+        font-size: var(--font-size-lg);
+        max-width: 56ch;
+        margin-bottom: var(--space-lg);
+      }
+      .hero__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+      }
+      @media (max-width: 640px) {
+        .hero__headline {
+          font-size: var(--font-size-2xl);
+        }
+      }
+    </style>
+
+    <script type="module" src="/js/pages/home.js"></script>
+  </body>
+</html>
